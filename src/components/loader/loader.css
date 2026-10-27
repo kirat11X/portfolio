@@ -1,0 +1,829 @@
+/*
+ * PortfolioLoader — "neon ignition".
+ * Every selector is scoped under .ldr-root (all classes are ldr- prefixed), so
+ * nothing here styles the rest of the site. Colours mirror the design tokens:
+ * eng cyan #3ee0ff for the tubes and UI, cre violet #b48cff only in the slow
+ * colour drift of the horizon glow.
+ */
+
+.ldr-root {
+  --ldr-neon: 62 224 255;
+  --ldr-violet: 180 140 255;
+  --ldr-amber: 255 181 71;
+  --ldr-core: #effdff;
+  --ldr-void: var(--color-void, #04050a);
+  --ldr-ease: var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+  --ldr-count: 5;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  isolation: isolate;
+  color: var(--color-fg, #f2f4f8);
+}
+
+/* Once the visitor commits, clicks fall through to the world. */
+.ldr-root:not([data-phase='idle']) {
+  pointer-events: none;
+}
+
+/* ───────────── Curtain: everything that covers the world ───────────── */
+
+.ldr-curtain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background-color: var(--ldr-void);
+}
+
+/* Iris: a hole (layer 2) cut out of a full layer (layer 1). Its size/position are animated from JS. */
+.ldr-root[data-phase='iris'] .ldr-curtain,
+.ldr-root[data-phase='done'] .ldr-curtain {
+  -webkit-mask-image: linear-gradient(#000, #000), radial-gradient(circle closest-side, #000 84%, transparent 100%);
+  mask-image: linear-gradient(#000, #000), radial-gradient(circle closest-side, #000 84%, transparent 100%);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%, 0 0;
+  mask-size: 100% 100%, 0 0;
+  -webkit-mask-position: 0 0, 50% 50%;
+  mask-position: 0 0, 50% 50%;
+}
+
+.ldr-root[data-phase='done'] .ldr-curtain {
+  visibility: hidden;
+}
+
+.ldr-sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 75% 45% at 50% 38%, rgb(18 26 48 / 0.5), transparent 72%),
+    linear-gradient(180deg, #020308 0%, #04060d 48%, #04050a 100%);
+}
+
+/* Fine grain keeps the dark gradients from banding on 8-bit displays. */
+.ldr-sky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+.ldr-sky::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 95% 85% at 50% 45%, transparent 52%, rgb(0 0 0 / 0.6) 100%);
+}
+
+/* ───────────── Layout ───────────── */
+
+.ldr-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.ldr-layout {
+  /* Space between the navbar band and the sign: keeps the top band clear and pins the sign. */
+  --ldr-lift: clamp(0.75rem, calc(15vh - 1.5rem), 10rem);
+  --ldr-size: clamp(2.5rem, min(calc((100vw - 2.5rem) / (var(--ldr-count) * 1.12)), 17vh), 8.5rem);
+  position: relative;
+  box-sizing: border-box;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: calc(var(--nav-h, 4.5rem) + var(--ldr-lift)) 1rem calc(1.75rem + env(safe-area-inset-bottom, 0px));
+  /* Decorations that reach past the content must not make the loader scrollable. */
+  overflow: hidden;
+  overflow: clip;
+}
+
+.ldr-root[data-compact] .ldr-layout {
+  --ldr-size: clamp(2rem, min(calc((100vw - 4rem) / (var(--ldr-count) * 1.12)), 10vh), 3.5rem);
+  justify-content: center;
+  padding-top: var(--nav-h, 4.5rem);
+}
+
+/* ───────────── Sign + horizon ───────────── */
+
+.ldr-sign {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-bottom: calc(var(--ldr-size) * 0.32);
+}
+
+.ldr-eyebrow {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 clamp(0.9rem, 3vh, 1.75rem);
+  color: var(--color-fg-muted, #a9aec0);
+  text-align: center;
+  transition: opacity 0.18s ease;
+}
+
+.ldr-horizon {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 100vw;
+  height: 0;
+  translate: -50% 0;
+  pointer-events: none;
+}
+
+.ldr-glow {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(170vw, 125rem);
+  height: clamp(14rem, 54vh, 36rem);
+  translate: -50% -50%;
+  background: radial-gradient(closest-side, rgb(var(--ldr-neon) / 0.2), rgb(var(--ldr-neon) / 0.06) 48%, transparent);
+}
+
+.ldr-glow--alt {
+  background: radial-gradient(closest-side, rgb(var(--ldr-violet) / 0.2), rgb(var(--ldr-violet) / 0.05) 48%, transparent);
+  opacity: 0;
+  animation: ldr-drift 16s ease-in-out infinite alternate;
+}
+
+.ldr-floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, rgb(0 0 0 / 0.6) 4vh, #000 14vh, rgb(0 0 0 / 0.45) 28vh, transparent 46vh);
+  mask-image: linear-gradient(180deg, transparent 0, rgb(0 0 0 / 0.6) 4vh, #000 14vh, rgb(0 0 0 / 0.45) 28vh, transparent 46vh);
+}
+
+.ldr-floor-grid {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 0;
+  animation: ldr-roll 3.2s linear infinite;
+}
+
+.ldr-floor-grid svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ldr-floor-lines {
+  fill: none;
+  stroke: rgb(var(--ldr-neon) / 0.17);
+  stroke-width: 1;
+}
+
+.ldr-skyline {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: max(100vw, 64rem);
+  height: auto;
+  aspect-ratio: 40 / 3;
+  translate: -50% 0;
+}
+
+.ldr-skyline-body {
+  fill: #060912;
+}
+
+.ldr-skyline-lit {
+  fill: rgb(var(--ldr-neon) / 0.55);
+}
+
+.ldr-skyline-lit-alt {
+  fill: rgb(var(--ldr-violet) / 0.55);
+}
+
+.ldr-horizon-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 4%,
+    rgb(var(--ldr-neon) / 0.3) 28%,
+    rgb(214 250 255 / 0.7) 50%,
+    rgb(var(--ldr-neon) / 0.3) 72%,
+    transparent 96%
+  );
+}
+
+/* ───────────── Neon wordmark ───────────── */
+
+.ldr-wordmark {
+  /* Drawn at twice the visible width: the opaque fill painted over it (paint-order) hides the
+     inner half and Unbounded's overlapping contours, leaving one clean outline tube. */
+  --ldr-stroke: max(2.5px, 0.05em);
+  --ldr-face: #05070e;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 0.06em;
+  font-family: var(--font-display, 'Unbounded', sans-serif);
+  font-size: var(--ldr-size);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    opacity 0.5s ease,
+    transform 0.9s var(--ldr-ease);
+}
+
+.ldr-wordmark[data-font='pending'] {
+  opacity: 0;
+}
+
+.ldr-gap {
+  width: 0.32em;
+}
+
+.ldr-letter {
+  position: relative;
+  display: block;
+}
+
+.ldr-letter span {
+  display: block;
+}
+
+/* Unlit glass tube: a faint outline around a dark letter face. */
+.ldr-glass {
+  color: var(--ldr-face);
+  -webkit-text-fill-color: var(--ldr-face);
+  -webkit-text-stroke: var(--ldr-stroke) rgb(170 205 255 / 0.2);
+  paint-order: stroke fill;
+}
+
+/* Everything that lights up; its opacity is the "power" running through the tube. */
+.ldr-power {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.ldr-bloom,
+.ldr-lit {
+  position: absolute;
+  inset: 0;
+}
+
+.ldr-bloom {
+  color: rgb(var(--ldr-neon) / 0.3);
+  -webkit-text-fill-color: rgb(var(--ldr-neon) / 0.3);
+  filter: blur(0.14em);
+  transition: filter 0.3s ease;
+}
+
+.ldr-lit {
+  color: var(--ldr-face);
+  -webkit-text-fill-color: var(--ldr-face);
+  -webkit-text-stroke: var(--ldr-stroke) var(--ldr-core);
+  paint-order: stroke fill;
+  filter: drop-shadow(0 0 0.014em rgb(var(--ldr-neon))) drop-shadow(0 0 0.06em rgb(var(--ldr-neon) / 0.85))
+    drop-shadow(0 0 0.17em rgb(var(--ldr-neon) / 0.5));
+}
+
+.ldr-letter[data-state='striking'] .ldr-power {
+  animation: ldr-flicker 2.8s steps(1, end) infinite;
+  animation-delay: calc(var(--ldr-i, 0) * -0.93s);
+}
+
+.ldr-letter[data-state='on'] .ldr-power {
+  opacity: 1;
+  animation: ldr-strike 0.62s steps(1, end) both;
+}
+
+.ldr-letter[data-state='error'] .ldr-glass {
+  -webkit-text-stroke-color: rgb(var(--ldr-amber) / 0.6);
+}
+
+.ldr-flash {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  width: 150%;
+  height: 260%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(220 252 255 / 0.5), rgb(var(--ldr-neon) / 0.2) 42%, transparent 72%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Exit: the sign surges as the aperture opens through it. */
+.ldr-root:is([data-phase='flare'], [data-phase='iris']) .ldr-wordmark {
+  transform: scale(1.06);
+}
+
+.ldr-root:is([data-phase='flare'], [data-phase='iris']) .ldr-power {
+  opacity: 1;
+  animation: none;
+}
+
+.ldr-root:is([data-phase='flare'], [data-phase='iris']) .ldr-bloom {
+  filter: blur(0.2em);
+}
+
+.ldr-root:is([data-phase='flare'], [data-phase='iris']) .ldr-flash {
+  animation: ldr-flash 0.65s ease-out both;
+}
+
+/* ───────────── Console: status, bar, actions, hints ───────────── */
+
+.ldr-console {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 40rem;
+  margin-top: clamp(1.25rem, 4.5vh, 2.75rem);
+  transition:
+    opacity 0.18s ease,
+    transform 0.3s var(--ldr-ease);
+}
+
+.ldr-root:not([data-phase='idle']) :is(.ldr-console, .ldr-eyebrow) {
+  opacity: 0;
+}
+
+.ldr-root:not([data-phase='idle']) .ldr-console {
+  transform: translateY(0.5rem);
+}
+
+.ldr-meter {
+  width: 100%;
+  max-width: 26rem;
+}
+
+.ldr-root[data-compact] .ldr-meter {
+  max-width: 18rem;
+}
+
+.ldr-meter-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.65rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+}
+
+.ldr-meter-label {
+  overflow: hidden;
+  color: var(--color-fg-muted, #a9aec0);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ldr-meter-value {
+  flex-shrink: 0;
+  color: var(--color-fg, #f2f4f8);
+  font-variant-numeric: tabular-nums;
+}
+
+.ldr-bar {
+  display: flex;
+  gap: 4px;
+  height: 6px;
+  filter: drop-shadow(0 0 5px rgb(var(--ldr-neon) / 0.45));
+}
+
+.ldr-seg {
+  position: relative;
+  flex: 1 1 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.08);
+}
+
+.ldr-seg-fill {
+  position: absolute;
+  inset: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, rgb(var(--ldr-neon) / 0.7), rgb(var(--ldr-neon)));
+  transition: transform 0.7s var(--ldr-ease);
+}
+
+/* The stage in progress breathes: activity, never fake progress. */
+.ldr-seg[data-current]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgb(var(--ldr-neon) / 0.22);
+  animation: ldr-pulse 1.6s ease-in-out infinite;
+}
+
+.ldr-seg[data-status='error'] {
+  background: rgb(var(--ldr-amber) / 0.45);
+}
+
+.ldr-note {
+  max-width: 25rem;
+  margin: 1.25rem 0 0;
+  color: var(--color-fg-muted, #a9aec0);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  text-align: center;
+  animation: ldr-rise 0.6s var(--ldr-ease) both;
+}
+
+.ldr-error {
+  width: 100%;
+  max-width: 28rem;
+  padding: 1rem 1.25rem 1.1rem;
+  border: 1px solid rgb(var(--ldr-amber) / 0.28);
+  border-radius: 1rem;
+  background: rgb(18 13 8 / 0.72);
+  text-align: center;
+  animation: ldr-rise 0.6s var(--ldr-ease) both;
+}
+
+.ldr-error-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+  color: var(--color-fg, #f2f4f8);
+  font-weight: 600;
+}
+
+.ldr-error-text {
+  margin: 0.4rem 0 0;
+  color: var(--color-fg-muted, #a9aec0);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.ldr-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.75rem;
+  margin-top: clamp(1rem, 3.2vh, 1.75rem);
+}
+
+.ldr-enter {
+  animation: ldr-rise 0.55s var(--ldr-ease) both;
+}
+
+.ldr-keyhint {
+  margin: 0.7rem 0 0;
+  color: var(--color-fg-muted, #a9aec0);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  animation: ldr-rise 0.55s 0.08s var(--ldr-ease) both;
+}
+
+.ldr-keyhint kbd {
+  margin-left: 0.3rem;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 0.35rem;
+  background: rgb(255 255 255 / 0.05);
+  color: var(--color-fg, #f2f4f8);
+  font-family: inherit;
+  font-size: 0.6875rem;
+}
+
+.ldr-hints {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem clamp(1.25rem, 4vw, 2.25rem);
+  margin: clamp(1.25rem, 4.5vh, 2.5rem) 0 0;
+  padding: 1.1rem clamp(1rem, 4vw, 1.75rem) 1rem;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 1.25rem;
+  background: rgb(7 8 14 / 0.78);
+  box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 24px 60px -24px rgb(0 0 0 / 0.7);
+  list-style: none;
+  animation: ldr-rise 0.7s 0.14s var(--ldr-ease) both;
+}
+
+.ldr-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.ldr-hint-visual {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.6rem;
+  height: 3.75rem;
+  color: var(--color-fg-muted, #a9aec0);
+}
+
+.ldr-hint-text {
+  max-width: 9.5rem;
+  color: var(--color-fg-muted, #a9aec0);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.1rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ldr-or {
+  padding-bottom: 0.45rem;
+  color: var(--color-fg-muted, #a9aec0);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+}
+
+.ldr-cluster {
+  display: grid;
+  grid-template-columns: repeat(3, 1.75rem);
+  grid-template-rows: repeat(2, 1.75rem);
+  grid-template-areas:
+    '. up .'
+    'left down right';
+  gap: 0.25rem;
+}
+
+.ldr-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  padding: 0 0.3rem;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 0.45rem;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.09), rgb(255 255 255 / 0.025));
+  box-shadow:
+    inset 0 -2px 0 rgb(0 0 0 / 0.5),
+    0 1px 0 rgb(255 255 255 / 0.04);
+  color: var(--color-fg, #f2f4f8);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  transition:
+    transform 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease,
+    color 0.12s ease;
+}
+
+.ldr-key[data-area='up'] {
+  grid-area: up;
+}
+
+.ldr-key[data-area='left'] {
+  grid-area: left;
+}
+
+.ldr-key[data-area='down'] {
+  grid-area: down;
+}
+
+.ldr-key[data-area='right'] {
+  grid-area: right;
+}
+
+.ldr-key--solo {
+  min-width: 2.25rem;
+  height: 2.25rem;
+  font-size: 0.875rem;
+}
+
+.ldr-key[data-pressed] {
+  transform: translateY(1px);
+  border-color: rgb(var(--ldr-neon) / 0.75);
+  box-shadow:
+    inset 0 -1px 0 rgb(0 0 0 / 0.4),
+    0 0 14px rgb(var(--ldr-neon) / 0.45);
+  color: rgb(var(--ldr-neon));
+}
+
+.ldr-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.03);
+  color: var(--color-fg, #f2f4f8);
+}
+
+/* ───────────── Aperture rim ───────────── */
+
+.ldr-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 1.5px rgb(var(--ldr-neon) / 0.85),
+    0 0 2.5rem 0.4rem rgb(var(--ldr-neon) / 0.38),
+    inset 0 0 2.5rem 0.4rem rgb(var(--ldr-neon) / 0.28);
+}
+
+/* ───────────── Reduced motion: steady states, no flicker, no drift ───────────── */
+
+.ldr-root[data-reduced] :is(.ldr-floor-grid, .ldr-glow--alt, .ldr-seg[data-current]::after, .ldr-enter, .ldr-keyhint, .ldr-hints, .ldr-note, .ldr-error) {
+  animation: none;
+}
+
+.ldr-root[data-reduced] .ldr-letter[data-state='striking'] .ldr-power {
+  animation: none;
+  opacity: 0.42;
+}
+
+.ldr-root[data-reduced] .ldr-letter[data-state='on'] .ldr-power {
+  animation: none;
+}
+
+.ldr-root[data-reduced] .ldr-glow--alt {
+  opacity: 0.35;
+}
+
+.ldr-root[data-reduced] .ldr-seg-fill {
+  transition: none;
+}
+
+/* ───────────── Short screens (landscape phones) ───────────── */
+
+@media (max-height: 44rem) {
+  .ldr-layout {
+    --ldr-lift: clamp(0.5rem, calc(10vh - 1.5rem), 4rem);
+  }
+}
+
+@media (max-height: 30rem) {
+  .ldr-eyebrow {
+    display: none;
+  }
+
+  .ldr-hints {
+    gap: 0.75rem 1.5rem;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .ldr-hint-visual {
+    height: 3rem;
+  }
+}
+
+/* ───────────── Keyframes ───────────── */
+
+/* A tube trying to strike: irregular, never more than ~3 flashes in any second. */
+@keyframes ldr-flicker {
+  0% {
+    opacity: 0.08;
+  }
+  6% {
+    opacity: 0.7;
+  }
+  8% {
+    opacity: 0.12;
+  }
+  12% {
+    opacity: 0.8;
+  }
+  15% {
+    opacity: 0.18;
+  }
+  36% {
+    opacity: 0.14;
+  }
+  40% {
+    opacity: 0.66;
+  }
+  57% {
+    opacity: 0.6;
+  }
+  59% {
+    opacity: 0.1;
+  }
+  61% {
+    opacity: 0.55;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  77%,
+  100% {
+    opacity: 0.08;
+  }
+}
+
+/* The moment a stage completes: a couple of stutters, then steady. */
+@keyframes ldr-strike {
+  0% {
+    opacity: 0.2;
+  }
+  12% {
+    opacity: 0.95;
+  }
+  22% {
+    opacity: 0.25;
+  }
+  34% {
+    opacity: 1;
+  }
+  44% {
+    opacity: 0.55;
+  }
+  52%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ldr-flash {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes ldr-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes ldr-drift {
+  0%,
+  25% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* One row of the geometric grid per loop: scale by 1/0.8 about the vanishing point. */
+@keyframes ldr-roll {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.25);
+  }
+}
+
+@keyframes ldr-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

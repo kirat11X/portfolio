@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#07080e" />
+    <meta name="color-scheme" content="dark light" />
+    <script>
+      // Apply the colour theme before first paint (mirrors src/lib/theme.ts). The home
+      // route opens on the always-dark 3D world unless the classic view was chosen.
+      (function () {
+        var theme = 'dark';
+        try {
+          var stored = localStorage.getItem('kirat:theme');
+          var light = stored ? stored === 'light' : matchMedia('(prefers-color-scheme: light)').matches;
+          var world = location.pathname === '/' && localStorage.getItem('kirat:view') !== 'classic';
+          if (light && !world) theme = 'light';
+        } catch (e) {}
+        var root = document.documentElement;
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        if (theme === 'light') document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f6f6f4');
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Kritansh Uppal — Engineering &amp; Creative Portfolio</title>
+    <meta
+      name="description"
+      content="Portfolio of Kritansh Uppal (Kirat), a Computer Science and Engineering student at Punjab Engineering College working across software, machine learning, computer vision, photography, video and design. Explore it as an interactive 3D district or a classic overview."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kritansh Uppal — Engineering &amp; Creative Portfolio" />
+    <meta
+      property="og:description"
+      content="Software, machine learning and visual craft — explore an interactive 3D district or browse the classic overview."
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="font-family: system-ui, sans-serif; color: #f2f4f8; padding: 2rem">
+        This portfolio needs JavaScript to run. Projects and contact details are also available on
+        <a href="https://github.com/kirat11X" style="color: #3ee0ff">GitHub</a>.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

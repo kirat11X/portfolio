@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>Arcade preview (dev only)</title>
+  </head>
+  <body style="margin: 0; background: #04050a">
+    <!--
+      Dev harness for src/world/arcade. Not part of the production build.
+      Query: ?game=tetris|pacman|catgpt (omit for the launcher) &reduced=1
+      window.__leakedKeys counts key events that escaped the dialog to window (should stay 0 while open).
+    -->
+    <div id="root"></div>
+    <script type="module" src="/src/world/arcade/preview/main.tsx"></script>
+  </body>
+</html>

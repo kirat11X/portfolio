@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>Loader preview (dev only)</title>
+  </head>
+  <body>
+    <!--
+      Dev harness for src/components/loader. Not part of the production build.
+      Query: ?status=loading|ready|error &stage=engine|fonts|world|shaders|frame|1..5
+             &progress=0..1 &slow=1 &returning=1 &reduced=1 &error=<text>
+             &panel=0 (hide controls) &world=0 (hide the stand-in world) &auto=1 (simulated run)
+    -->
+    <div id="root"></div>
+    <script type="module" src="/src/components/loader/preview/main.tsx"></script>
+  </body>
+</html>

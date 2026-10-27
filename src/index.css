@@ -1,0 +1,368 @@
+@import 'tailwindcss';
+
+/* Self-hosted typefaces (no third-party font requests). */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/unbounded/400.css';
+@import '@fontsource/unbounded/500.css';
+@import '@fontsource/unbounded/600.css';
+@import '@fontsource/unbounded/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+/*
+ * `light:` styles an element only when the light theme applies to it (not inside a
+ * forced-dark subtree). Prefer theme-aware tokens; use this for the rare exception.
+ */
+@custom-variant light (&:where([data-theme='light'], [data-theme='light'] *):not(:where([data-theme='dark'], [data-theme='dark'] *)));
+
+/*
+ * Design tokens. JavaScript mirrors live in src/styles/tokens.ts.
+ * Usage: bg-ink-950, text-fg-muted, border-line, text-eng, font-display,
+ * text-display-lg, rounded-card, shadow-glow-eng, ease-out-expo, animate-rise.
+ */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Unbounded', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-void: #04050a;
+  --color-ink-950: #07080e;
+  --color-ink-900: #0b0d16;
+  --color-ink-850: #10131f;
+  --color-ink-800: #151927;
+  --color-ink-700: #1e2335;
+  --color-ink-600: #2a3048;
+
+  --color-fg: #f2f4f8;
+  --color-fg-muted: #a9aec0;
+  --color-fg-subtle: #737a92;
+
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.16);
+
+  --color-eng: #3ee0ff;
+  --color-eng-deep: #0891b2;
+  --color-cre: #b48cff;
+  --color-cre-deep: #7c3aed;
+  --color-signal: #ffb547;
+  --color-ok: #4ade80;
+  /* Maximum-contrast ink: white on the dark theme, black on the light one. Use it
+     for hover "brighten" states and faint tints (bg-contrast/[0.03]) instead of white. */
+  --color-contrast: #ffffff;
+
+  --text-display-xl: clamp(2.6rem, 7.2vw, 6.25rem);
+  --text-display-xl--line-height: 1.02;
+  --text-display-xl--letter-spacing: -0.035em;
+  --text-display-lg: clamp(2.2rem, 5vw, 4.25rem);
+  --text-display-lg--line-height: 1.05;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-display-md: clamp(1.7rem, 3.2vw, 2.6rem);
+  --text-display-md--line-height: 1.12;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-display-sm: clamp(1.25rem, 2vw, 1.6rem);
+  --text-display-sm--line-height: 1.2;
+  --text-display-sm--letter-spacing: -0.01em;
+
+  --radius-card: 1.25rem;
+  --radius-panel: 1.75rem;
+
+  /* Shadows resolve through theme-scoped variables (see "Themes" below), because
+     Tailwind inlines literal shadow values into each utility. */
+  --shadow-panel: var(--elevation-panel);
+  --shadow-glow-eng: var(--elevation-glow-eng);
+  --shadow-glow-cre: var(--elevation-glow-cre);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --animate-rise: rise 0.7s var(--ease-out-expo) both;
+  --animate-fade: fade 0.5s ease-out both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+:root {
+  /* Height of the fixed global navigation; pages offset their content by it. */
+  --nav-h: 4.5rem;
+  color-scheme: dark;
+
+  /* Accent triplets for hand-written gradients: rgb(var(--eng-rgb) / 0.1). */
+  --eng-rgb: 62 224 255;
+  --cre-rgb: 180 140 255;
+  --elevation-panel: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 24px 60px -24px rgb(0 0 0 / 0.7);
+  --elevation-glow-eng: 0 0 0 1px rgb(62 224 255 / 0.28), 0 18px 50px -18px rgb(62 224 255 / 0.4);
+  --elevation-glow-cre: 0 0 0 1px rgb(180 140 255 / 0.3), 0 18px 50px -18px rgb(180 140 255 / 0.42);
+  --elevation-lift: 0 1px 0 0 rgb(255 255 255 / 0.05) inset, 0 36px 70px -34px rgb(0 0 0 / 0.95);
+  --elevation-device: 0 30px 70px -28px rgb(0 0 0 / 0.95);
+  --contrast-rgb: 255 255 255;
+  --glass-bg: rgb(11 13 22 / 0.72);
+  --glass-strong-bg: rgb(16 19 31 / 0.88);
+  --hairline: rgb(255 255 255 / 0.18);
+  --selection-bg: rgb(62 224 255 / 0.28);
+  --selection-fg: #ffffff;
+  --scrollbar-thumb: rgb(255 255 255 / 0.12);
+  --scrollbar-thumb-hover: rgb(62 224 255 / 0.4);
+}
+
+/*
+ * Themes. Dark is the default (the @theme values above). src/lib/theme.ts sets
+ * data-theme on <html>; any subtree can force a theme with its own data-theme
+ * attribute (the 3D world, its HUD and the loader are always dark).
+ *
+ * Light-theme contrast (WCAG, on page #f6f6f4 / card #ffffff):
+ *   fg #12141a 17.0 / 18.4 · fg-muted #464c5c 7.9 / 8.6 · fg-subtle #5a6072 5.8 / 6.3
+ *   eng #0a6c88 5.5 / 6.0 · cre #6d28d9 6.6 / 7.1 · signal #9a4a00 5.8 / 6.3 · ok #127035 5.7 / 6.2
+ *   ink-950 text on solid eng 5.5, on solid cre 6.6.
+ */
+[data-theme='light'] {
+  color-scheme: light;
+
+  --color-void: #e7e9ee;
+  --color-ink-950: #f6f6f4;
+  --color-ink-900: #ffffff;
+  --color-ink-850: #f0f1f3;
+  --color-ink-800: #e8eaee;
+  --color-ink-700: #dcdfe5;
+  --color-ink-600: #c7ccd6;
+
+  --color-fg: #12141a;
+  --color-fg-muted: #464c5c;
+  --color-fg-subtle: #5a6072;
+
+  --color-line: rgb(18 20 26 / 0.1);
+  --color-line-strong: rgb(18 20 26 / 0.2);
+
+  --color-eng: #0a6c88;
+  --color-eng-deep: #075468;
+  --color-cre: #6d28d9;
+  --color-cre-deep: #5b21b6;
+  --color-signal: #9a4a00;
+  --color-ok: #127035;
+  --color-contrast: #000000;
+
+  --eng-rgb: 40 180 220;
+  --cre-rgb: 139 92 246;
+  --elevation-panel: 0 1px 2px 0 rgb(18 20 26 / 0.04), 0 18px 40px -26px rgb(18 20 26 / 0.22);
+  --elevation-glow-eng: 0 0 0 1px rgb(10 108 136 / 0.18), 0 14px 32px -16px rgb(10 108 136 / 0.45);
+  --elevation-glow-cre: 0 0 0 1px rgb(109 40 217 / 0.18), 0 14px 32px -16px rgb(109 40 217 / 0.42);
+  --elevation-lift: 0 1px 2px 0 rgb(18 20 26 / 0.05), 0 30px 60px -32px rgb(18 20 26 / 0.32);
+  --elevation-device: 0 1px 2px 0 rgb(18 20 26 / 0.06), 0 28px 60px -30px rgb(18 20 26 / 0.45);
+  --contrast-rgb: 18 20 26;
+  --glass-bg: rgb(255 255 255 / 0.74);
+  --glass-strong-bg: rgb(255 255 255 / 0.9);
+  --hairline: rgb(18 20 26 / 0.16);
+  --selection-bg: rgb(10 108 136 / 0.2);
+  --selection-fg: #12141a;
+  --scrollbar-thumb: rgb(18 20 26 / 0.18);
+  --scrollbar-thumb-hover: rgb(10 108 136 / 0.55);
+}
+
+/* Re-asserts the dark values so a subtree stays dark inside a light page. */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-void: #04050a;
+  --color-ink-950: #07080e;
+  --color-ink-900: #0b0d16;
+  --color-ink-850: #10131f;
+  --color-ink-800: #151927;
+  --color-ink-700: #1e2335;
+  --color-ink-600: #2a3048;
+
+  --color-fg: #f2f4f8;
+  --color-fg-muted: #a9aec0;
+  --color-fg-subtle: #737a92;
+
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.16);
+
+  --color-eng: #3ee0ff;
+  --color-eng-deep: #0891b2;
+  --color-cre: #b48cff;
+  --color-cre-deep: #7c3aed;
+  --color-signal: #ffb547;
+  --color-ok: #4ade80;
+  --color-contrast: #ffffff;
+
+  --eng-rgb: 62 224 255;
+  --cre-rgb: 180 140 255;
+  --elevation-panel: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 24px 60px -24px rgb(0 0 0 / 0.7);
+  --elevation-glow-eng: 0 0 0 1px rgb(62 224 255 / 0.28), 0 18px 50px -18px rgb(62 224 255 / 0.4);
+  --elevation-glow-cre: 0 0 0 1px rgb(180 140 255 / 0.3), 0 18px 50px -18px rgb(180 140 255 / 0.42);
+  --elevation-lift: 0 1px 0 0 rgb(255 255 255 / 0.05) inset, 0 36px 70px -34px rgb(0 0 0 / 0.95);
+  --elevation-device: 0 30px 70px -28px rgb(0 0 0 / 0.95);
+  --contrast-rgb: 255 255 255;
+  --glass-bg: rgb(11 13 22 / 0.72);
+  --glass-strong-bg: rgb(16 19 31 / 0.88);
+  --hairline: rgb(255 255 255 / 0.18);
+  --selection-bg: rgb(62 224 255 / 0.28);
+  --selection-fg: #ffffff;
+  --scrollbar-thumb: rgb(255 255 255 / 0.12);
+  --scrollbar-thumb-hover: rgb(62 224 255 / 0.4);
+}
+
+
+@layer base {
+  html {
+    /* Safety net: decorative glows must never create sideways scrolling on phones. */
+    overflow-x: clip;
+    background-color: var(--color-ink-950);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    margin: 0;
+    background-color: var(--color-ink-950);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Inherited colour is resolved where it is declared, so a nested theme scope must restate it. */
+  body [data-theme] {
+    color: var(--color-fg);
+  }
+
+  ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-eng);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink-950);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border: 3px solid var(--color-ink-950);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+}
+
+/* Reusable surfaces and labels. Prefer these over ad-hoc glass recipes. */
+@utility glass {
+  background-color: var(--glass-bg);
+  border: 1px solid var(--color-line);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+
+@utility glass-strong {
+  background-color: var(--glass-strong-bg);
+  border: 1px solid var(--color-line-strong);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility hairline-top {
+  background-image: linear-gradient(90deg, transparent, var(--hairline), transparent);
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+}
+
+/* Honour both the OS setting and the in-app motion toggle (data-motion is set by src/lib/motion.ts). */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion='full']) *,
+  html:not([data-motion='full']) *::before,
+  html:not([data-motion='full']) *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-motion='reduced'] *,
+html[data-motion='reduced'] *::before,
+html[data-motion='reduced'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Print: white paper, black text, no fixed chrome (the resume page is designed to print). */
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000;
+  }
+}

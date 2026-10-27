@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>City preview (dev only)</title>
+  </head>
+  <body style="margin: 0; background: #04050a">
+    <!--
+      Dev harness for src/world/city. Not part of the production build.
+      Query: ?cam=overview|hub|street|engineering|creative|about|gaming|gamingStreet|plaza|pc|server|arena|arenaStreet|scoreboard|race|finish|monolith|exhibit|signs|skyline
+             &still=N (stop after N frames)  &gate=<i> &ram=1 &score=h,a (gaming hooks)
+             &quality=high|medium|low &reduced=1 &hover=<interactable id> &focus=<id>
+             &pos=x,y,z&target=x,y,z &fov=42 &car=0 &orbit=0 &stats=0
+      window.__cityStats = { calls, triangles, texts, frames, ... }
+    -->
+    <div id="root" style="position: fixed; inset: 0"></div>
+    <script type="module" src="/src/world/city/preview/main.tsx"></script>
+  </body>
+</html>

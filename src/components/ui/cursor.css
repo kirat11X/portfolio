@@ -1,0 +1,61 @@
+/* Sci-fi cursor follower (see CursorFollower.tsx). Colours follow the theme tokens. */
+.cursor-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-eng);
+  box-shadow: 0 0 10px 2px color-mix(in oklab, var(--color-eng) 70%, transparent);
+  transition: opacity 0.2s ease-out;
+  will-change: transform;
+}
+
+.cursor-ring {
+  --lock: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--color-eng) calc(35% + var(--lock) * 30%), transparent);
+  box-shadow: 0 0 calc(6px + var(--lock) * 14px) color-mix(in oklab, var(--color-eng) 35%, transparent);
+  transition: opacity 0.2s ease-out, border-radius 0.25s var(--ease-out-expo);
+  will-change: transform, width, height;
+}
+
+.cursor-bracket {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-color: var(--color-eng);
+  border-style: solid;
+  opacity: calc(0.35 + var(--lock) * 0.65);
+}
+.cursor-bracket-tl { left: -3px; top: -3px; border-width: 2px 0 0 2px; }
+.cursor-bracket-tr { right: -3px; top: -3px; border-width: 2px 2px 0 0; }
+.cursor-bracket-bl { left: -3px; bottom: -3px; border-width: 0 0 2px 2px; }
+.cursor-bracket-br { right: -3px; bottom: -3px; border-width: 0 2px 2px 0; }
+
+.cursor-ripple {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-eng);
+  animation: cursor-ripple 0.55s var(--ease-out-expo) forwards;
+}
+
+@keyframes cursor-ripple {
+  from {
+    transform: scale(0.3);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
