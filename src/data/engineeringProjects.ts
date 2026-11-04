@@ -559,13 +559,21 @@ export const engineeringProjects: EngineeringProject[] = [
     tags: ['Ollama', 'Local LLM', 'RAG', 'Docker', 'Vercel', 'Pandas', 'Python', 'Streamlit'],
     cover: {
       kind: 'image',
-      src: '/engineering/profitlens-pnl-breakdown.png',
-      alt: 'ProfitLens chatbot interface showing customer P&L waterfall breakdown and dataset metrics',
+      src: '/engineering/profitlens-thumbnail.png',
+      alt: 'ProfitLens Cardmember Profitability Intelligence — Amex Campus Challenge 2026 Overall Campus Winner',
       width: 1024,
-      height: 511,
-      caption: 'ProfitLens P&L waterfall breakdown for Customer 1 and 500K dataset summary metrics.',
+      height: 576,
+      caption: 'ProfitLens: Cardmember Profitability Intelligence — Amex Campus Challenge 2026 Overall Campus Winner.',
     },
     gallery: [
+      {
+        kind: 'image',
+        src: '/engineering/profitlens-thumbnail.png',
+        alt: 'ProfitLens Cardmember Profitability Intelligence — Amex Campus Challenge 2026 Overall Campus Winner',
+        width: 1024,
+        height: 576,
+        caption: 'ProfitLens presentation cover: Amex Campus Challenge 2026 Overall Campus Winner.',
+      },
       {
         kind: 'image',
         src: '/engineering/profitlens-pnl-breakdown.png',
