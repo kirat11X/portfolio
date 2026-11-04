@@ -422,17 +422,24 @@ export const engineeringProjects: EngineeringProject[] = [
     title: 'Data Structures & Algorithms in C++',
     tagline: 'Core data structures implemented from scratch, plus contest practice.',
     summary:
-      'C++ practice covering singly, doubly and circular linked lists, stacks, queues, binary trees, BSTs, heaps, hashing and graphs, with a few contest solutions and a reusable competitive-programming template.',
+      'C++ practice covering singly, doubly and circular linked lists, stacks, queues, binary trees, BSTs, heaps, hashing and graphs, with competitive programming verified on Codolio.',
     overview:
-      'A practice folder of 38 C++ source files: 34 across 13 topic folders and 4 contest solutions. It includes circular and doubly linked lists, a stack built on a linked list, a circular queue, a binary search tree and a heap, alongside problems such as detecting a loop in a linked list, reversing a list in groups of k and sliding windows. A separate template sets up fast I/O, type aliases and debug helpers for contests.',
+      'Hands-on data structures and algorithmic problem solving in C++ covering linked lists, trees, graphs, heaps, dynamic programming, and competitive programming. Verified through active competitive problem solving on Codolio (@kiratt), alongside custom from-scratch implementations of fundamental structures (circular and doubly linked lists, linked stacks, circular queues, binary search trees, heaps, and contest templates with fast I/O).',
     stack: [
       { group: 'Language', items: ['C++17', 'STL'] },
       { group: 'Tooling', items: ['g++'] },
     ],
-    tags: ['C++17', 'STL', 'g++'],
+    tags: ['C++17', 'STL', 'g++', 'DSA', 'Competitive Programming'],
+    links: [
+      {
+        label: 'Codolio Profile',
+        href: 'https://codolio.com/profile/kiratt',
+        kind: 'other',
+      },
+    ],
     order: 13,
     sourceNote:
-      'From the local DSAcpp and competitive_programming folders (file dates August–December 2025, not under version control).',
+      'Verified via public competitive programming profile on Codolio (codolio.com/profile/kiratt) and local C++ practice repositories.',
   },
   {
     slug: 'skillforge-ai-onboarding',
