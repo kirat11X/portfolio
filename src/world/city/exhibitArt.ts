@@ -92,7 +92,18 @@ function compose(texture: CanvasTexture, exhibit: WorldExhibit, accent: string, 
   ctx.fillRect(0, 0, w, h);
   if (img) {
     try {
-      ctx.drawImage(img, 0, 0, w, h);
+      const iw = img.naturalWidth || img.width;
+      const ih = img.naturalHeight || img.height;
+      if (iw && ih) {
+        const scale = Math.max(w / iw, h / ih);
+        const dw = iw * scale;
+        const dh = ih * scale;
+        const dx = (w - dw) / 2;
+        const dy = (h - dh) / 2;
+        ctx.drawImage(img, dx, dy, dw, dh);
+      } else {
+        ctx.drawImage(img, 0, 0, w, h);
+      }
       ctx.getImageData(0, 0, 1, 1); // throws if drawing the SVG tainted the canvas
     } catch {
       // Tainted (very old engines): start over without the artwork.
@@ -140,7 +151,10 @@ export function acquireExhibitFace(exhibit: WorldExhibit, accent: string): Textu
       img.onload = () => resolve(img);
       img.onerror = () => resolve(null);
     });
-    img.src = artDataUrl({ seed: exhibit.project.slug, category: exhibit.project.category });
+    img.src =
+      exhibit.project.slug === 'profitlens-amex-challenge'
+        ? '/world/profitlens-3d.jpg'
+        : artDataUrl({ seed: exhibit.project.slug, category: exhibit.project.category });
     Promise.all([loaded, canvasFontsReady()]).then(([image]) => {
       if (cache.get(exhibit.id) === created) compose(texture, exhibit, accent, image);
     });
