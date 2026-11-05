@@ -1,5 +1,5 @@
 import type { LinkKind, Project } from '@/types';
-import { BookOpen, CirclePlay, FileText, Globe, Link2, MonitorPlay, Palette, PenTool } from 'lucide-react';
+import { BookOpen, CirclePlay, Download, FileText, Globe, Link2, MonitorPlay, Palette, PenTool } from 'lucide-react';
 import { Tag } from '@/components/ui/Tag';
 import { Github, Instagram } from '@/components/ui/Icons';
 import { cn } from '@/lib/cn';
@@ -98,7 +98,20 @@ export function TechList({ tags, max = 3, className, label = 'Built with' }: Tec
 }
 
 /** Icon for a project link kind. Decorative: the link text carries the meaning. */
-export function LinkIcon({ kind, className = 'h-4 w-4' }: { kind: LinkKind; className?: string }) {
+export function LinkIcon({
+  kind,
+  href,
+  label,
+  className = 'h-4 w-4',
+}: {
+  kind: LinkKind;
+  href?: string;
+  label?: string;
+  className?: string;
+}) {
+  if (href?.endsWith('.apk') || label?.toLowerCase().includes('apk') || label?.toLowerCase().includes('download')) {
+    return <Download className={className} aria-hidden="true" />;
+  }
   switch (kind) {
     case 'github':
       return <Github className={className} />;

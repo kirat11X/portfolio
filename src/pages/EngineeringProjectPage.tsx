@@ -97,9 +97,10 @@ function CaseStudy({ project }: { project: EngineeringProject }) {
                     <Button
                       key={link.href}
                       href={link.href}
+                      download={link.href.endsWith('.apk') ? true : undefined}
                       variant={index === 0 ? 'primary' : 'secondary'}
                       tone="eng"
-                      iconLeft={<LinkIcon kind={link.kind} className="h-4 w-4" />}
+                      iconLeft={<LinkIcon kind={link.kind} href={link.href} label={link.label} className="h-4 w-4" />}
                     >
                       {link.label}
                     </Button>

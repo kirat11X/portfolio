@@ -89,15 +89,17 @@ export function ProjectFacts({ project, hideLinksBelowLg = false, className }: P
           <ul className="-mx-2 mt-2">
             {links.map((link) => {
               const newTab = isNewTab(link.href);
+              const isDownload = link.href.endsWith('.apk') || link.label.toLowerCase().includes('download');
               return (
                 <li key={link.href}>
                   <a
                     {...anchorProps(link.href)}
+                    download={isDownload ? true : undefined}
                     className="group flex min-h-11 items-center gap-3 rounded-xl px-2 text-sm text-fg-muted transition-colors hover:bg-contrast/[0.04] hover:text-fg"
                   >
-                    <LinkIcon kind={link.kind} className="h-4 w-4 shrink-0 text-fg-subtle transition-colors group-hover:text-eng" />
+                    <LinkIcon kind={link.kind} href={link.href} label={link.label} className="h-4 w-4 shrink-0 text-fg-subtle transition-colors group-hover:text-eng" />
                     <span className="min-w-0 flex-1 truncate">{link.label}</span>
-                    {newTab && (
+                    {newTab && !isDownload && (
                       <>
                         <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-fg-subtle" aria-hidden="true" />
                         <span className="sr-only"> (opens in a new tab)</span>
