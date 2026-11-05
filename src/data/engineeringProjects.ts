@@ -647,6 +647,24 @@ export const engineeringProjects: EngineeringProject[] = [
       { group: 'Packaging', items: ['Android Studio', 'Gradle', 'APK'] },
     ],
     tags: ['React 19', 'Capacitor', 'Android', 'Sensors', 'TypeScript', 'Vite', 'Mobile', 'Pedometer'],
+    cover: {
+      kind: 'image',
+      src: '/engineering/kinetic-thumbnail.png',
+      alt: 'Kinetic physical and mental fitness tracker Android app interface showing real-time step counter and wellness dashboard',
+      width: 1024,
+      height: 576,
+      caption: 'Kinetic: Real-time hardware pedometer sensor fusion and wellness dashboard on Android.',
+    },
+    gallery: [
+      {
+        kind: 'image',
+        src: '/engineering/kinetic-thumbnail.png',
+        alt: 'Kinetic physical and mental fitness tracker showcase on Android with motion sensors and health metrics',
+        width: 1024,
+        height: 576,
+        caption: 'Kinetic: Hardware sensor fusion pedometer, activity rings, and offline biometric tracking.',
+      },
+    ],
     results: [
       'Achieved real-time hardware step counting directly from phone accelerometers with sub-second responsiveness.',
       'Verified zero-crash performance across continuous mobile step sessions on physical Android devices.',
@@ -696,6 +714,24 @@ export const engineeringProjects: EngineeringProject[] = [
       { group: 'Packaging', items: ['Gradle', 'APK', 'Android Studio'] },
     ],
     tags: ['React 19', 'Capacitor', 'Android', 'Offline-First', 'Finance', 'TypeScript', 'Vite', 'SVG'],
+    cover: {
+      kind: 'image',
+      src: '/engineering/vault-thumbnail.png',
+      alt: 'Vault offline-first personal finance tracker Android app displaying encrypted expense ledger and SVG spending charts',
+      width: 1024,
+      height: 576,
+      caption: 'Vault: 100% private, zero-cloud personal finance tracker with interactive SVG visualizers.',
+    },
+    gallery: [
+      {
+        kind: 'image',
+        src: '/engineering/vault-thumbnail.png',
+        alt: 'Vault offline personal finance tracker showcase with encrypted ledger, spending velocity, and in-memory CSV export',
+        width: 1024,
+        height: 576,
+        caption: 'Vault: Local encrypted storage, budget limit guardian, and interactive SVG breakdown charts.',
+      },
+    ],
     results: [
       'Zero-cloud design guarantees 100% data privacy with zero external network requests.',
       'Instant transaction saves and interactive SVG chart re-renders under 16ms (60 FPS).',
@@ -745,6 +781,24 @@ export const engineeringProjects: EngineeringProject[] = [
       { group: 'Frontend', items: ['React 19', 'TypeScript', 'Tailwind CSS'] },
     ],
     tags: ['React 19', 'Capacitor', 'Android', 'Gemini', 'LLM', 'AI Chatbot', 'TypeScript', 'Vite'],
+    cover: {
+      kind: 'image',
+      src: '/engineering/lumina-thumbnail.png',
+      alt: 'Lumina AI conversational assistant Android app interface featuring Google Gemini token streaming and offline fallback',
+      width: 1024,
+      height: 576,
+      caption: 'Lumina AI: Google Gemini-powered Android conversational agent with resilient offline fallback engine.',
+    },
+    gallery: [
+      {
+        kind: 'image',
+        src: '/engineering/lumina-thumbnail.png',
+        alt: 'Lumina AI conversational chatbot showcase running on Android with Gemini AI integration and offline synthesis',
+        width: 1024,
+        height: 576,
+        caption: 'Lumina AI: Google Gemini token streaming client, Liquid Sanctuary UI, and zero-crash offline fallback.',
+      },
+    ],
     results: [
       'Zero-crash resilience verified during simulated airplane mode and network handover transitions.',
       'Fast roundtrip response rendering with markdown formatting optimized for Android touchscreens.',
@@ -794,6 +848,24 @@ export const engineeringProjects: EngineeringProject[] = [
       { group: 'Packaging', items: ['Gradle', 'APK', 'Android Studio'] },
     ],
     tags: ['React 19', 'Capacitor', 'Android', 'E-Commerce', 'TypeScript', 'Vite', 'Mobile UI'],
+    cover: {
+      kind: 'image',
+      src: '/engineering/pulse-thumbnail.png',
+      alt: 'Pulse Store retail e-commerce Android application interface with interactive product catalog and cart drawer',
+      width: 1024,
+      height: 576,
+      caption: 'Pulse Store: Lightweight React 19 retail storefront with dynamic variant pickers and instant cart math.',
+    },
+    gallery: [
+      {
+        kind: 'image',
+        src: '/engineering/pulse-thumbnail.png',
+        alt: 'Pulse Store modern mobile e-commerce storefront showcase with live catalog filtering, variant pickers, and checkout',
+        width: 1024,
+        height: 576,
+        caption: 'Pulse Store: React 19 single-page shopping app with instant SKU selection and animated checkout flow.',
+      },
+    ],
     results: [
       'Fluid 60 FPS scrolling and instantaneous variant selection feedback on mobile hardware.',
       'Sub-50ms cart recalculations across complex item and discount combinations.',
@@ -843,6 +915,24 @@ export const engineeringProjects: EngineeringProject[] = [
       { group: 'Tooling & Build', items: ['Vite', 'Gradle', 'APK'] },
     ],
     tags: ['React 19', 'Capacitor', 'Android', 'Scoped Storage', 'Storage Access Framework', 'Audio Player', 'TypeScript'],
+    cover: {
+      kind: 'image',
+      src: '/engineering/vector-thumbnail.png',
+      alt: 'Vector broad filesystem audio player Android app showing now-playing vinyl stage and local directory crawler',
+      width: 1024,
+      height: 576,
+      caption: 'Vector: Conquered Android Scoped Storage using Storage Access Framework to index and play local music.',
+    },
+    gallery: [
+      {
+        kind: 'image',
+        src: '/engineering/vector-thumbnail.png',
+        alt: 'Vector audio player showcase on Android with Storage Access Framework crawler, mini-player overlay, and now-playing stage',
+        width: 1024,
+        height: 576,
+        caption: 'Vector: SAF directory crawler, MP3/FLAC playback pipeline, docked mini-player, and Vector Noir design.',
+      },
+    ],
     results: [
       'Successfully bypassed scoped storage limitations to discover and index thousands of local audio tracks.',
       'Low-latency audio playback and seeking from internal storage and SD card directories.',
@@ -892,6 +982,24 @@ export const engineeringProjects: EngineeringProject[] = [
       { group: 'Packaging', items: ['Gradle', 'APK', 'Android Studio'] },
     ],
     tags: ['React 19', 'Capacitor', 'Android', 'Video Streaming', 'Local Player', 'TypeScript', 'Vite'],
+    cover: {
+      kind: 'image',
+      src: '/engineering/personal-stream-thumbnail.png',
+      alt: 'Personal Stream hybrid cinema application displaying local video playback modal alongside AI-curated movie streaming catalog',
+      width: 1024,
+      height: 576,
+      caption: 'Personal Stream: Hybrid offline device cinema and cloud trailer streaming catalog with AI curator rankings.',
+    },
+    gallery: [
+      {
+        kind: 'image',
+        src: '/engineering/personal-stream-thumbnail.png',
+        alt: 'Personal Stream hybrid movie streaming showcase displaying local video player and cloud streaming catalog with Gemini reviews',
+        width: 1024,
+        height: 576,
+        caption: 'Personal Stream: Dual-engine offline .mp4/.mkv local player and cloud trailer catalog with AI review rankings.',
+      },
+    ],
     results: [
       'Smooth playback of high-definition offline local videos alongside fast cloud trailer streaming.',
       'Unified offline file playback and online browsing in a single lightweight Android application.',
