@@ -1010,19 +1010,19 @@ export const engineeringProjects: EngineeringProject[] = [
     cover: {
       kind: 'image',
       src: '/engineering/personal-stream-thumbnail.png',
-      alt: 'Personal Stream hybrid cinema application displaying local video playback modal alongside AI-curated movie streaming catalog',
+      alt: 'Personal Stream cinema showcase: Cinematic ruby theme with a desktop browser cinema player window overlapped by a mobile playback screen',
       width: 1024,
       height: 576,
-      caption: 'Personal Stream: Hybrid offline device cinema and cloud trailer streaming catalog with AI curator rankings.',
+      caption: 'Personal Stream: Cinematic ruby theme with a desktop browser cinema player window overlapped by a mobile playback screen.',
     },
     gallery: [
       {
         kind: 'image',
         src: '/engineering/personal-stream-thumbnail.png',
-        alt: 'Personal Stream hybrid movie streaming showcase displaying local video player and cloud streaming catalog with Gemini reviews',
+        alt: 'Personal Stream cinema showcase: Cinematic ruby theme with a desktop browser cinema player window overlapped by a mobile playback screen',
         width: 1024,
         height: 576,
-        caption: 'Personal Stream: Dual-engine offline .mp4/.mkv local player and cloud trailer catalog with AI review rankings.',
+        caption: 'Personal Stream: Cinematic ruby theme with a desktop browser cinema player window overlapped by a mobile playback screen.',
       },
     ],
     results: [
