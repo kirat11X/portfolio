@@ -615,4 +615,298 @@ export const engineeringProjects: EngineeringProject[] = [
     order: 6,
     sourceNote: 'From the Amex Campus Challenge 2026 project repository, competition submission, and live Vercel deployment.',
   },
+  {
+    slug: 'kinetic-fitness-tracker',
+    discipline: 'engineering',
+    category: 'software',
+    title: 'Kinetic — Physical & Mental Fitness Tracker',
+    tagline: 'Real-time hardware pedometer and wellness tracker on Android via Capacitor & React 19.',
+    summary:
+      'A cross-platform Android health app combining real-time hardware pedometer step tracking via ACTIVITY_RECOGNITION and Capacitor Motion with web sensor fallbacks, offline streak storage and workout analytics.',
+    overview:
+      'Built as part of an experiment testing whether production-ready Android applications can be built using modern React instead of traditional Java/Kotlin. Kinetic tackles real-time hardware sensor fusion on mobile: it integrates Android’s ACTIVITY_RECOGNITION permission and Capacitor Motion to interface directly with device pedometer hardware, while offering a web devicemotion fallback for browsers. Features workout logging, hydration tracking, mental wellness check-ins, and local streak persistence with zero cloud dependencies. Includes a pre-compiled Android APK ready to download and test.',
+    problem:
+      'Cross-platform hybrid apps frequently struggle with background hardware sensor access and high-frequency pedometer interrupts without draining battery or dropping frames.',
+    approach: [
+      'Interfaced Android ACTIVITY_RECOGNITION and step counter hardware via Capacitor Motion plugins.',
+      'Implemented a mathematical sensor fusion and debounce filter to eliminate false steps caused by device vibration.',
+      'Built a devicemotion fallback engine ensuring full functionality when loaded in mobile web browsers.',
+      'Structured local-first persistence for workout metrics, hydration logs, and daily step history with zero network latency.',
+      'Packaged and verified a standalone signed APK compiled with Android Gradle and Capacitor.',
+    ],
+    pipeline: [
+      { label: 'Hardware Sensor', detail: 'Android Step Counter & ACTIVITY_RECOGNITION' },
+      { label: 'Capacitor Bridge', detail: 'Motion plugin with native event listeners' },
+      { label: 'Web Fallback', detail: 'Browser devicemotion acceleration listener' },
+      { label: 'Analytics Engine', detail: 'Step goal calculation and calories burned estimation' },
+      { label: 'Local Store', detail: 'Encrypted offline daily streak and habit storage' },
+    ],
+    stack: [
+      { group: 'Mobile & Hybrid', items: ['Capacitor', 'Android SDK', 'Motion API', 'Vite'] },
+      { group: 'Frontend', items: ['React 19', 'TypeScript', 'Tailwind CSS', 'Lucide React'] },
+      { group: 'Packaging', items: ['Android Studio', 'Gradle', 'APK'] },
+    ],
+    tags: ['React 19', 'Capacitor', 'Android', 'Sensors', 'TypeScript', 'Vite', 'Mobile', 'Pedometer'],
+    results: [
+      'Achieved real-time hardware step counting directly from phone accelerometers with sub-second responsiveness.',
+      'Verified zero-crash performance across continuous mobile step sessions on physical Android devices.',
+      'Provided a standalone pre-compiled APK directly in the repository for immediate installation and testing.',
+    ],
+    links: [
+      {
+        label: 'Source on GitHub',
+        href: 'https://github.com/kirat11X/mental-and-fitness',
+        kind: 'github',
+      },
+    ],
+    status: 'prototype',
+    year: '2026',
+    order: 14,
+    sourceNote: 'From the open-source GitHub repository kirat11X/mental-and-fitness and compiled Android APK release.',
+  },
+  {
+    slug: 'vault-expense-manager',
+    discipline: 'engineering',
+    category: 'software',
+    title: 'Vault — Offline-First Expense Manager',
+    tagline: '100% private, zero-cloud personal finance tracker with encrypted offline storage & SVG charts.',
+    summary:
+      'A zero-cloud Android personal finance tracker built with React and Capacitor, featuring localized encrypted storage, budget limit guardians, interactive SVG spending charts, and instant in-memory CSV export.',
+    overview:
+      'Tested offline-first financial data architectures on Android: Vault ensures total financial privacy by never contacting cloud servers or telemetry backends. It stores all transactions in localized encrypted storage, enforces dynamic category budget limit guardians with visual alerts, renders responsive interactive SVG breakdown charts, and generates in-memory CSV spreadsheets for instant export. Includes a pre-compiled Android APK ready to download and test directly on device.',
+    problem:
+      'Modern finance apps rely heavily on invasive cloud synchronisation, subscription paywalls, and telemetry, putting sensitive personal spending logs at risk of data leakage.',
+    approach: [
+      'Constructed a 100% offline-first state engine with local encrypted persistence.',
+      'Designed budget guardian logic that monitors category thresholds and triggers warning states before overspending occurs.',
+      'Created custom reactive SVG charts for category breakdowns, monthly trends, and spending velocity without heavy charting dependencies.',
+      'Implemented an in-memory CSV generation pipeline that serializes transaction ledgers into downloadable spreadsheets on device.',
+      'Wrapped the responsive web shell with Capacitor into a standalone Android APK.',
+    ],
+    pipeline: [
+      { label: 'Transaction Input', detail: 'Category, amount, timestamp, and notes' },
+      { label: 'Budget Guardian', detail: 'Threshold calculation and overspending guards' },
+      { label: 'Storage Layer', detail: 'Encrypted local device persistence' },
+      { label: 'Visualization', detail: 'Custom responsive SVG charts and breakdown graphs' },
+      { label: 'Export Pipeline', detail: 'In-memory CSV generation via Android DownloadManager' },
+    ],
+    stack: [
+      { group: 'Mobile & Hybrid', items: ['Capacitor', 'Android SDK', 'Vite'] },
+      { group: 'Frontend', items: ['React 19', 'TypeScript', 'Tailwind CSS', 'SVG'] },
+      { group: 'Packaging', items: ['Gradle', 'APK', 'Android Studio'] },
+    ],
+    tags: ['React 19', 'Capacitor', 'Android', 'Offline-First', 'Finance', 'TypeScript', 'Vite', 'SVG'],
+    results: [
+      'Zero-cloud design guarantees 100% data privacy with zero external network requests.',
+      'Instant transaction saves and interactive SVG chart re-renders under 16ms (60 FPS).',
+      'Standalone APK provided in root repository for friction-free Android installation.',
+    ],
+    links: [
+      {
+        label: 'Source on GitHub',
+        href: 'https://github.com/kirat11X/expense-tracker',
+        kind: 'github',
+      },
+    ],
+    status: 'prototype',
+    year: '2026',
+    order: 15,
+    sourceNote: 'From the open-source GitHub repository kirat11X/expense-tracker and compiled Android APK release.',
+  },
+  {
+    slug: 'lumina-ai-chatbot',
+    discipline: 'engineering',
+    category: 'software',
+    title: 'Lumina AI — Android & Web Chatbot',
+    tagline: 'Gemini-powered conversational assistant with zero-crash offline fallback engine.',
+    summary:
+      'An Android AI chatbot powered by Google Gemini with client-side orchestration baked into the APK, featuring an automatic zero-crash offline fallback engine that maintains conversational continuity when disconnected.',
+    overview:
+      'Explored embedding state-of-the-art LLM capabilities directly into an Android hybrid APK without an intermediary backend server. Lumina AI wraps Google Gemini API orchestration directly within React and Capacitor, featuring prompt templating, markdown code rendering, and conversational context tracking. To counter flaky mobile network conditions, it integrates an automatic zero-crash offline fallback heuristic engine that seamlessly responds and queues messages when mobile connectivity drops. Includes a pre-compiled Android APK ready for testing.',
+    problem:
+      'Mobile AI apps break catastrophically upon connectivity dropouts; network failures throw unhandled exceptions and discard active conversational contexts.',
+    approach: [
+      'Integrated Google Gemini REST API client directly into the hybrid Android APK with secure key management.',
+      'Engineered an automatic offline fallback engine that detects network drops and provides local conversational continuity.',
+      'Implemented streaming markdown token parsing with syntax-highlighted code blocks for mobile displays.',
+      'Persisted chat history locally with optimistic updates and retry mechanisms upon reconnection.',
+      'Packaged the complete client into an installable Android APK with minimal binary footprint.',
+    ],
+    pipeline: [
+      { label: 'User Query', detail: 'Optimistic UI update with message history context' },
+      { label: 'Network Monitor', detail: 'Real-time online/offline connection state detection' },
+      { label: 'Gemini Client', detail: 'Direct REST API call with system prompt injection' },
+      { label: 'Offline Fallback', detail: 'Zero-crash fallback response generator when disconnected' },
+      { label: 'Stream Renderer', detail: 'Markdown formatting and code block syntax viewer' },
+    ],
+    stack: [
+      { group: 'AI & APIs', items: ['Google Gemini API', 'LLM Prompting', 'Markdown Parser'] },
+      { group: 'Mobile & Hybrid', items: ['Capacitor', 'Android SDK', 'Vite'] },
+      { group: 'Frontend', items: ['React 19', 'TypeScript', 'Tailwind CSS'] },
+    ],
+    tags: ['React 19', 'Capacitor', 'Android', 'Gemini', 'LLM', 'AI Chatbot', 'TypeScript', 'Vite'],
+    results: [
+      'Zero-crash resilience verified during simulated airplane mode and network handover transitions.',
+      'Fast roundtrip response rendering with markdown formatting optimized for Android touchscreens.',
+      'Pre-compiled APK available in the repository root for immediate direct installation.',
+    ],
+    links: [
+      {
+        label: 'Source on GitHub',
+        href: 'https://github.com/kirat11X/AI-Chatbot-Android',
+        kind: 'github',
+      },
+    ],
+    status: 'prototype',
+    year: '2026',
+    order: 16,
+    sourceNote: 'From the open-source GitHub repository kirat11X/AI-Chatbot-Android and compiled Android APK release.',
+  },
+  {
+    slug: 'pulse-store-ecommerce',
+    discipline: 'engineering',
+    category: 'software',
+    title: 'Pulse Store — Modern E-Commerce Storefront',
+    tagline: 'Lightweight, responsive shopping app with variant pickers, cart math, and checkout animations.',
+    summary:
+      'A lightweight, responsive e-commerce mobile application built with React 19 and Capacitor. Features dynamic category filtering, interactive size/color variant pickers, real-time cart calculations, and smooth checkout animations.',
+    overview:
+      'Designed to test UI responsiveness and high-frequency state updates in hybrid mobile apps. Pulse Store delivers a modern digital storefront experience: product catalog browsing, instant category filtering, interactive multi-attribute variant pickers (sizes, colors, stock availability), reactive cart state calculations with tax/shipping formulas, and fluid page transition animations. Packaged as a high-performance native Android application with a pre-compiled APK.',
+    problem:
+      'Mobile e-commerce experiences on webviews often feel sluggish, suffering from unresponsive button taps, stuttering list scrolling, and delayed cart calculation updates.',
+    approach: [
+      'Optimized React 19 component trees and memoized state selectors to eliminate re-render bottlenecks.',
+      'Built interactive multi-attribute variant pickers that dynamically validate sku combinations and availability.',
+      'Designed reactive cart state management with real-time subtotal, discount, tax, and shipping calculations.',
+      'Implemented hardware-accelerated CSS animations for drawer modals, toasts, and checkout transitions.',
+      'Compiled the app into an installable Android APK with native touch feedback.',
+    ],
+    pipeline: [
+      { label: 'Catalog Engine', detail: 'Dynamic product feeds and category filtering' },
+      { label: 'Variant Selector', detail: 'Size, color, and inventory state matrix' },
+      { label: 'Cart Store', detail: 'Reactive cart operations, quantity updates, and math' },
+      { label: 'Checkout Flow', detail: 'Multi-step checkout validation and animated confirmation' },
+      { label: 'Android Build', detail: 'Capacitor native wrapper and APK generation' },
+    ],
+    stack: [
+      { group: 'Mobile & Hybrid', items: ['Capacitor', 'Android SDK', 'Vite'] },
+      { group: 'Frontend', items: ['React 19', 'TypeScript', 'Tailwind CSS', 'State Management'] },
+      { group: 'Packaging', items: ['Gradle', 'APK', 'Android Studio'] },
+    ],
+    tags: ['React 19', 'Capacitor', 'Android', 'E-Commerce', 'TypeScript', 'Vite', 'Mobile UI'],
+    results: [
+      'Fluid 60 FPS scrolling and instantaneous variant selection feedback on mobile hardware.',
+      'Sub-50ms cart recalculations across complex item and discount combinations.',
+      'Ready-to-install Android APK available in the repository root.',
+    ],
+    links: [
+      {
+        label: 'Source on GitHub',
+        href: 'https://github.com/kirat11X/E-commerce',
+        kind: 'github',
+      },
+    ],
+    status: 'prototype',
+    year: '2026',
+    order: 17,
+    sourceNote: 'From the open-source GitHub repository kirat11X/E-commerce and compiled Android APK release.',
+  },
+  {
+    slug: 'vector-audio-player',
+    discipline: 'engineering',
+    category: 'software',
+    title: 'Vector — Broad Filesystem Audio Player',
+    tagline: 'Conquered Android scoped storage to crawl device music folders and play local audio.',
+    summary:
+      'An offline Android music player built with React and Capacitor that navigates modern scoped storage via DocumentsContract and Storage Access Framework to recursively crawl local folders and stream device audio.',
+    overview:
+      'Tackled one of the toughest challenges in modern Android cross-platform development: accessing arbitrary local files under Android 11+ scoped storage restrictions. Vector leverages Android DocumentsContract and Storage Access Framework (MANAGE_EXTERNAL_STORAGE / SAF) to recursively scan device storage directories for MP3, WAV, and FLAC audio files. It feeds discovered tracks into an HTML5/Web Audio playback pipeline with playlist queuing, seek scrubbing, background playback, and cover art extraction. Includes a pre-compiled Android APK ready to download and run.',
+    problem:
+      'Android scoped storage (API 30+) strictly blocks traditional filesystem path traversal (/sdcard), making local media players impossible to build with standard web APIs without native SAF bridge orchestration.',
+    approach: [
+      'Orchestrated Android Storage Access Framework and DocumentsContract to obtain broad tree permissions.',
+      'Engineered a recursive directory crawler that scans device folders for audio file formats.',
+      'Bridged native content URIs to web-viewable audio streams via Capacitor local server protocols.',
+      'Built a full-featured music player interface with seekable progress, playlist management, and track shuffling.',
+      'Packaged the solution into a standalone Android APK with media control permissions.',
+    ],
+    pipeline: [
+      { label: 'SAF Permission', detail: 'DocumentsContract tree URI authorization' },
+      { label: 'Filesystem Crawler', detail: 'Recursive directory traversal for audio MIME types' },
+      { label: 'URI Bridge', detail: 'Capacitor native-to-web streaming conversion' },
+      { label: 'Audio Engine', detail: 'HTML5 Audio / Web Audio API playback controller' },
+      { label: 'Player UI', detail: 'Playlist manager, scrubber, and playback controls' },
+    ],
+    stack: [
+      { group: 'Android & Native', items: ['Storage Access Framework', 'DocumentsContract', 'Capacitor', 'Android SDK'] },
+      { group: 'Audio & Web', items: ['HTML5 Audio', 'Web Audio API', 'React 19', 'TypeScript'] },
+      { group: 'Tooling & Build', items: ['Vite', 'Gradle', 'APK'] },
+    ],
+    tags: ['React 19', 'Capacitor', 'Android', 'Scoped Storage', 'Storage Access Framework', 'Audio Player', 'TypeScript'],
+    results: [
+      'Successfully bypassed scoped storage limitations to discover and index thousands of local audio tracks.',
+      'Low-latency audio playback and seeking from internal storage and SD card directories.',
+      'Includes a pre-compiled APK directly in the repository for phone testing.',
+    ],
+    links: [
+      {
+        label: 'Source on GitHub',
+        href: 'https://github.com/kirat11X/Music_player',
+        kind: 'github',
+      },
+    ],
+    status: 'prototype',
+    year: '2026',
+    order: 18,
+    sourceNote: 'From the open-source GitHub repository kirat11X/Music_player and compiled Android APK release.',
+  },
+  {
+    slug: 'personal-stream-cinema',
+    discipline: 'engineering',
+    category: 'software',
+    title: 'Personal Stream — Hybrid Movie Streaming & Device Cinema',
+    tagline: 'Offline local device cinema and cloud trailer streaming with AI-curated reviews.',
+    summary:
+      'A hybrid Android media application that doubles as a local video player and cloud streaming catalog. Browse device storage to play offline .mp4/.mkv movies or stream cloud trailers with AI-curated reviews.',
+    overview:
+      'Bridged offline personal media libraries with cloud video streaming into a unified Android APK. Personal Stream allows users to browse local phone storage to play offline movies (.mp4, .mkv, .webm) in a custom video player modal, while seamlessly connecting to cloud streaming catalogs for trailers, trending titles, and AI-curated movie reviews. Built with React 19, Vite, and Capacitor, demonstrating that hybrid web technology can deliver responsive video playback alongside rich online catalogs. Includes a pre-compiled Android APK ready for immediate device testing.',
+    problem:
+      'Users must typically switch between local video player tools (VLC) and online streaming platforms; building a hybrid player requires bridging native local video filesystem access with cloud media streaming.',
+    approach: [
+      'Implemented local Android filesystem browsing to detect and launch offline video files (.mp4, .mkv).',
+      'Constructed a custom video player modal with full-screen playback, aspect ratio scaling, and gesture scrub.',
+      'Integrated online streaming APIs and Gemini-curated review summaries for cloud movie exploration.',
+      'Managed hybrid state between offline local file bookmarks and cloud watchlist queues.',
+      'Compiled and signed an Android APK using Capacitor and Android Gradle toolchains.',
+    ],
+    pipeline: [
+      { label: 'Local Scanner', detail: 'Device folder traversal for offline .mp4 and .mkv files' },
+      { label: 'Video Player', detail: 'HTML5 Video modal with native playback controls' },
+      { label: 'Cloud Catalog', detail: 'Online trailer feeds and trending movie metadata' },
+      { label: 'AI Reviews', detail: 'Gemini-generated context summaries and ratings' },
+      { label: 'APK Distribution', detail: 'Pre-compiled Android binary bundled in repository' },
+    ],
+    stack: [
+      { group: 'Mobile & Hybrid', items: ['Capacitor', 'Android SDK', 'Vite'] },
+      { group: 'Frontend & Video', items: ['React 19', 'HTML5 Video', 'TypeScript', 'Tailwind CSS'] },
+      { group: 'Packaging', items: ['Gradle', 'APK', 'Android Studio'] },
+    ],
+    tags: ['React 19', 'Capacitor', 'Android', 'Video Streaming', 'Local Player', 'TypeScript', 'Vite'],
+    results: [
+      'Smooth playback of high-definition offline local videos alongside fast cloud trailer streaming.',
+      'Unified offline file playback and online browsing in a single lightweight Android application.',
+      'Directly installable pre-compiled APK provided in the repository root.',
+    ],
+    links: [
+      {
+        label: 'Source on GitHub',
+        href: 'https://github.com/kirat11X/Movie_streaming',
+        kind: 'github',
+      },
+    ],
+    status: 'prototype',
+    year: '2026',
+    order: 19,
+    sourceNote: 'From the open-source GitHub repository kirat11X/Movie_streaming and compiled Android APK release.',
+  },
 ];
