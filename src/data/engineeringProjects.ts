@@ -153,6 +153,74 @@ export const engineeringProjects: EngineeringProject[] = [
       'From research_track/ (RESULTS_A.md, RESULTS_C.md, PROGRESS_TRAIN.md, hitl_anpr/README.md). Metrics are on public and synthetic data, not campus gate footage or real invoices.',
   },
   {
+    slug: 'libreshare-p2p-transfer',
+    discipline: 'engineering',
+    category: 'software',
+    title: 'LibreShare — Cross-Platform P2P File Transfer',
+    tagline: 'Fast, end-to-end encrypted peer-to-peer file transfer across local networks and internet relays without cloud storage.',
+    summary:
+      'A high-performance, cross-platform P2P file sharing application and protocol engine built in Flutter and Dart. Features mDNS/UDP local discovery, TLS 1.3 encryption, SAS verification, 4 MiB verified chunk streaming, and zero-install browser Web Portals.',
+    overview:
+      'LibreShare is an open-source, zero-cloud peer-to-peer file transfer platform for Android, iOS, Linux, macOS, and Windows. Devices on the same Wi-Fi or LAN discover each other automatically via UDP multicast and mDNS, establishing direct TLS 1.3 encrypted streams verified by 6-digit Short Authentication String (SAS) out-of-band codes. The pure-Dart core engine implements the custom LSP/1 wire protocol with 4 MiB verified chunks, resumable transfers, NAT traversal, and internet relay fallback. Also includes a built-in zero-install HTTP Web Portal enabling QR-code browser file sharing with any device without app installation.',
+    problem:
+      'Existing file-sharing tools either compromise privacy through centralized cloud uploads, enforce account registration, throttle bandwidth, or lack seamless cross-platform interoperability across mobile, desktop, and web environments.',
+    approach: [
+      'Engineered a custom binary wire protocol (LSP/1) with 4 MiB chunk pipelining and SHA-256 integrity verification, supporting instant resume on interrupted transfers.',
+      'Implemented local network zero-configuration discovery using UDP broadcast and mDNS, falling back to encrypted internet relay tunnels when direct routing fails.',
+      'Secured connections using TLS 1.3 with certificate pinning, complemented by 6-digit Short Authentication String (SAS) out-of-band verification to prevent MITM attacks.',
+      'Built high-throughput native hashing using Dart FFI bindings to OpenSSL libcrypto / Windows bcrypt, exceeding 500 MiB/s hash rates.',
+      'Developed a zero-install HTTP Web Portal allowing instant browser-based file exchange with non-app devices via QR code pairing.',
+    ],
+    pipeline: [
+      { label: 'Peer Discovery', detail: 'mDNS, UDP multicast & Nostr relay rendezvous' },
+      { label: 'Handshake & Auth', detail: 'TLS 1.3 ephemeral cert pinning & 6-digit SAS verification' },
+      { label: 'Chunking Engine', detail: '4 MiB streams with FFI SHA-256 verification & resume' },
+      { label: 'Connection Ladder', detail: 'Wi-Fi direct → LAN link-local → AES-256-GCM tunnel' },
+      { label: 'Web Portal', detail: 'Embedded HTTP server with QR-code browser pairing' },
+    ],
+    stack: [
+      { group: 'Core Engine & Protocol', items: ['Dart 3', 'TLS 1.3', 'FFI / OpenSSL', 'UDP Multicast', 'mDNS'] },
+      { group: 'Client Applications', items: ['Flutter 3', 'Android', 'iOS', 'macOS', 'Linux', 'Windows'] },
+      { group: 'Security & Networking', items: ['AES-256-GCM', 'SHA-256', 'SAS Codes', 'UPnP / NAT-PMP', 'Docker'] },
+    ],
+    tags: ['Flutter', 'Dart', 'P2P', 'Networking', 'TLS 1.3', 'Cryptography', 'Cross-Platform', 'Open-Source'],
+    cover: {
+      kind: 'image',
+      src: '/engineering/libreshare-thumbnail.png',
+      alt: 'LibreShare cross-platform P2P file transfer application interface showcasing real-time encrypted device-to-device transfers',
+      width: 1024,
+      height: 576,
+      caption: 'LibreShare: Fast, end-to-end encrypted peer-to-peer file transfer across local networks and internet relays.',
+    },
+    gallery: [
+      {
+        kind: 'image',
+        src: '/engineering/libreshare-thumbnail.png',
+        alt: 'LibreShare cross-platform P2P file transfer showcase featuring direct Wi-Fi streaming and SAS verification',
+        width: 1024,
+        height: 576,
+        caption: 'LibreShare: High-performance Flutter 3 and Dart core engine with TLS 1.3 encryption and Web Portal sharing.',
+      },
+    ],
+    results: [
+      'Achieved local Wi-Fi transfer speeds reaching up to 300 MB/s with native FFI SHA-256 acceleration.',
+      'Shipped multi-platform release builds across Android, Linux, Windows, macOS, and iOS from a single unified codebase.',
+      'Maintained 100% privacy with zero cloud dependencies, zero telemetry, and over 3,000 automated protocol test suites.',
+    ],
+    links: [
+      {
+        label: 'Source on GitHub',
+        href: 'https://github.com/kirat11X/LibreShare',
+        kind: 'github',
+      },
+    ],
+    status: 'shipped',
+    year: '2026',
+    featured: true,
+    order: 1,
+    sourceNote: 'From the open-source GitHub repository kirat11X/LibreShare and official documentation (2026).',
+  },
+  {
     slug: 'growplay-table-tennis-analysis',
     discipline: 'engineering',
     category: 'cv',
@@ -188,8 +256,7 @@ export const engineeringProjects: EngineeringProject[] = [
     tags: ['React', 'FastAPI', 'MongoDB', 'Firebase', 'YOLO', 'RAG', 'RTMPose', 'OpenCV', 'PyTorch'],
     status: 'prototype',
     year: '2026',
-    featured: true,
-    order: 1,
+    order: 20,
     sourceNote:
       'From the GrowPlay codebase, requirements document and commit history (2026).',
   },

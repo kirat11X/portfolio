@@ -38,6 +38,7 @@ export const profileData: ProfileData = {
       pdfUrl: '/resume/kritansh-uppal-sde.pdf',
       skillCategories: ['Languages', 'Frameworks & libraries', 'Databases, tools & systems'],
       projectSlugs: [
+        'libreshare-p2p-transfer',
         'kinetic-fitness-tracker',
         'vault-expense-manager',
         'lumina-ai-chatbot',
