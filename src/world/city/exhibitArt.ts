@@ -154,6 +154,8 @@ export function acquireExhibitFace(exhibit: WorldExhibit, accent: string): Textu
     img.src =
       exhibit.project.slug === 'profitlens-amex-challenge'
         ? '/world/profitlens-3d.jpg'
+        : exhibit.project.slug === 'libreshare-p2p-transfer'
+        ? '/world/libreshare-3d.png'
         : artDataUrl({ seed: exhibit.project.slug, category: exhibit.project.category });
     Promise.all([loaded, canvasFontsReady()]).then(([image]) => {
       if (cache.get(exhibit.id) === created) compose(texture, exhibit, accent, image);
