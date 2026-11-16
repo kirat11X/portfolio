@@ -93,18 +93,25 @@ function CaseStudy({ project }: { project: EngineeringProject }) {
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-fg-muted sm:text-xl">{project.tagline}</p>
               {links.length > 0 && (
                 <div className="mt-8 flex flex-wrap gap-3">
-                  {links.map((link, index) => (
-                    <Button
-                      key={link.href}
-                      href={link.href}
-                      download={link.href.endsWith('.apk') ? true : undefined}
-                      variant={index === 0 ? 'primary' : 'secondary'}
-                      tone="eng"
-                      iconLeft={<LinkIcon kind={link.kind} href={link.href} label={link.label} className="h-4 w-4" />}
-                    >
-                      {link.label}
-                    </Button>
-                  ))}
+                  {links.map((link, index) => {
+                    const isDownload =
+                      link.href.endsWith('.apk') ||
+                      link.href.endsWith('.zip') ||
+                      link.href.endsWith('.tar.gz') ||
+                      link.label.toLowerCase().includes('download');
+                    return (
+                      <Button
+                        key={link.href}
+                        href={link.href}
+                        download={isDownload ? true : undefined}
+                        variant={index === 0 ? 'primary' : 'secondary'}
+                        tone="eng"
+                        iconLeft={<LinkIcon kind={link.kind} href={link.href} label={link.label} className="h-4 w-4" />}
+                      >
+                        {link.label}
+                      </Button>
+                    );
+                  })}
                 </div>
               )}
             </div>

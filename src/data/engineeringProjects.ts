@@ -204,7 +204,7 @@ export const engineeringProjects: EngineeringProject[] = [
     ],
     results: [
       'Achieved local Wi-Fi transfer speeds reaching up to 300 MB/s with native FFI SHA-256 acceleration.',
-      'Shipped multi-platform release builds across Android, Linux, Windows, macOS, and iOS from a single unified codebase.',
+      'Shipped multi-platform release builds across Android (ARM64 & Universal APKs), Linux (x64 .tar.gz), Windows 10/11 (.exe / x64 zip), and macOS (.app zip) directly downloadable from release packages.',
       'Maintained 100% privacy with zero cloud dependencies, zero telemetry, and over 3,000 automated protocol test suites.',
     ],
     links: [
@@ -212,6 +212,31 @@ export const engineeringProjects: EngineeringProject[] = [
         label: 'Source on GitHub',
         href: 'https://github.com/kirat11X/LibreShare',
         kind: 'github',
+      },
+      {
+        label: 'Download Android APK (arm64)',
+        href: 'https://github.com/kirat11X/LibreShare/releases/download/v1.0.0/libreshare-1.0.0-android-arm64-v8a.apk',
+        kind: 'other',
+      },
+      {
+        label: 'Download Android APK (Universal)',
+        href: 'https://github.com/kirat11X/LibreShare/releases/download/v1.0.0/libreshare-1.0.0-android-universal.apk',
+        kind: 'other',
+      },
+      {
+        label: 'Download Linux (x64)',
+        href: 'https://github.com/kirat11X/LibreShare/releases/download/v1.0.0/libreshare-1.0.0-linux-x64.tar.gz',
+        kind: 'other',
+      },
+      {
+        label: 'Download Windows (.exe)',
+        href: 'https://github.com/kirat11X/LibreShare/releases/download/v1.0.0/libreshare-1.0.0-windows-x64.zip',
+        kind: 'other',
+      },
+      {
+        label: 'Download macOS (.app)',
+        href: 'https://github.com/kirat11X/LibreShare/releases/download/v1.0.0/libreshare-1.0.0-macos.zip',
+        kind: 'other',
       },
     ],
     status: 'shipped',
